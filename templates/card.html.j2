@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ title }} — Card #{{ card_number }}</title>
+  <style>
+    :root {
+      --card-radius: 10px; /* Reduced border radius */
+      --pad: 12px; /* Optimized padding */
+      --gap: 10px; /* Optimized gap */
+      --bg: {{ background_color|default('#FFEAB3') }};
+    }
+    @page { size: A4 landscape; margin: 5mm; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: var(--bg);
+      color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .bingo-card {
+      background: var(--bg);
+      width: 100%; /* Use full available width */
+      height: 100%; /* Use full available height */
+      max-width: 840px; /* Maximum width for larger screens */
+      max-height: 600px; /* Maximum height for larger screens */
+      padding: 15px; /* Slightly reduced padding */
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto; /* Center the card */
+    }
+    .card-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .title-wrap { position: relative; display: flex; align-items: center; gap: 8px; }
+    .title-images { position: relative; display: flex; gap: 8px; }
+    .decor { width: 48px; height: 48px; object-fit: contain; }
+    .decor.right { order: 2; }
+    .card-title {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: clamp(24px, 4vw, 40px); /* Increased font size for better readability */
+      text-transform: uppercase;
+    }
+    .card-id {
+      position: absolute;
+      left: 8px;
+      bottom: -12px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #2b2b2b;
+      opacity: 0.8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 8px; /* Optimized gap */
+      margin-top: 12px; /* Further reduced margin */
+      flex: 1;
+      height: calc(100% - 60px); /* Account for header height */
+    }
+    .song-card {
+      background: #fffdf6d9;
+      border: 1.5px solid #d1b07a;
+      border-radius: 8px; /* Further reduced border radius */
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; /* Center content horizontally */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      height: 100%; /* Fill available space */
+      min-height: 0; /* Allow proper scaling */
+      position: relative; /* For potential hover effects */
+      overflow: hidden; /* Prevent text overflow */
+    }
+    .song-title {
+      font-weight: 800;
+      font-size: clamp(18px, 2.2vw, 26px); /* Further increased font size for better readability */
+      line-height: 1.2;
+      margin-bottom: 6px;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-align: center;
+      width: 100%;
+    }
+    .song-artist {
+      font-weight: 500;
+      font-size: clamp(16px, 1.7vw, 20px); /* Further increased font size for better readability */
+      opacity: 0.9;
+      line-height: 1.2;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-align: center;
+      width: 100%;
+    }
+    @media print {
+      body { margin: 0; padding: 0; }
+      .bingo-card { 
+        width: 100%; 
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        page-break-after: always;
+      }
+      /* Optimize font sizes for print */
+      .song-title { font-size: 20px; }
+      .song-artist { font-size: 16px; }
+      .card-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  {% include 'card_inner.html.j2' %}
+</body>
+</html>

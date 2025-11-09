@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ sheet_title }}</title>
+  <style>
+    @page { size: A4 landscape; margin: 5mm; }
+    
+    :root {
+      --card-radius: 16px; /* MARK DIMENSION */
+      --pad: 14px; /* MARK DIMENSION */
+      --gap: 14px; /* MARK DIMENSION */
+    }
+    
+    * { box-sizing: border-box; }
+    
+    html, body { 
+      height: 100%; 
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: #f3efe4;
+      color: #1a1a1a;
+    }
+    
+    .sheet {
+      width: 100%;
+      height: 100%;
+      padding: 0; /* Removed padding to maximize space */
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2mm; /* Minimal gap for visual separation but allows for cutting */
+    }
+    
+    .cell {
+      background: #FFEAB3;
+      border-radius: 6px; /* Reduced border radius to save space */
+      padding: 2mm; /* Slightly increased padding for better visual separation */
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12); /* Subtle shadow for visual separation */
+    }
+    
+    .bingo-card {
+      background: transparent;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px; /* Reduced margin to save vertical space */
+    }
+    
+    .title-wrap { 
+      position: relative; 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; /* MARK DIMENSION */
+    }
+    
+    .title-images { 
+      position: relative; 
+      display: flex; 
+      gap: 6px; /* MARK DIMENSION */
+    }
+    
+    .decor { 
+      width: 28px; /* Slightly increased for better visibility */
+      height: 28px; /* Slightly increased for better visibility */
+      object-fit: contain; 
+    }
+    
+    .decor.right { order: 2; }
+    
+    .card-title {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: 22px; /* Increased font size for better readability */
+      text-transform: uppercase;
+      margin: 0;
+    }
+    
+    .card-id {
+      position: absolute;
+      left: 6px; /* MARK DIMENSION */
+      bottom: -12px; /* MARK DIMENSION */
+      font-weight: 700;
+      font-size: 12px; /* MARK DIMENSION */
+      color: #2b2b2b;
+      opacity: 0.8;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 6px; /* Optimized gap to maximize content space */
+      flex: 1;
+      height: calc(100% - 50px); /* Account for header height */
+    }
+    
+    .song-card {
+      background: #fffdf6d9;
+      border: 1.5px solid #d1b07a;
+      border-radius: 8px; /* Further reduced border radius */
+      padding: 6px 8px; /* Optimized padding */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; /* Center content horizontally */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      height: 100%; /* Fill available space */
+      min-height: 0; /* Allow proper scaling */
+      position: relative; /* For potential hover effects */
+      overflow: hidden; /* Prevent text overflow */
+    }
+    
+    .song-title {
+      font-weight: 800;
+      font-size: min(16px, 3.2vw); /* Responsive font size for better readability */
+      line-height: 1.15;
+      margin-bottom: 4px;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .song-artist {
+      font-weight: 500;
+      font-size: min(14px, 2.8vw); /* Responsive font size for better readability */
+      opacity: 0.9;
+      line-height: 1.15;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-align: center;
+      width: 100%;
+    }
+    
+    @media print {
+      body { margin: 0; padding: 0; }
+      .sheet { 
+        height: 100vh; 
+        width: 100vw;
+        page-break-after: always;
+      }
+      /* Ensure proper scaling in print mode */
+      .cell { page-break-inside: avoid; }
+      /* Optimize font sizes for print */
+      .song-title { font-size: 16px; }
+      .song-artist { font-size: 14px; }
+      .card-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    {% for card in cards %}
+      <div class="cell">
+        {% with title=card.title, card_number=card.card_number, background_color=card.background_color, songs=card.songs, title_images=card.title_images %}
+          {% include 'card_inner.html.j2' %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

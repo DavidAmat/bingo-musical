@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>BINGO MUSICAL DE PRUEBA — Card #1</title>
+  <style>
+    :root {
+      --card-radius: 16px;
+      --pad: 14px;
+      --gap: 14px;
+      --bg: #FFEAB3;
+    }
+    @page { size: A4; margin: 12mm; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: var(--bg);
+      color: #1a1a1a;
+    }
+    .bingo-card {
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+    .card-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .title-wrap { position: relative; display: flex; align-items: center; gap: 10px; }
+    .title-images { position: relative; display: flex; gap: 10px; }
+    .decor { width: 44px; height: 44px; object-fit: contain; }
+    .decor.right { order: 2; }
+    .card-title {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: clamp(20px, 3.6vw, 36px);
+      text-transform: uppercase;
+    }
+    .card-id {
+      position: absolute;
+      left: 8px;
+      bottom: -12px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #2b2b2b;
+      opacity: 0.8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap);
+      margin-top: 22px;
+    }
+    .song-card {
+      background: #fffdf6d9;
+      border: 2px solid #d1b07a;
+      border-radius: var(--card-radius);
+      padding: var(--pad);
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .song-title {
+      font-weight: 800;
+      font-size: clamp(14px, 1.6vw, 22px);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-wrap: balance;
+    }
+    .song-artist {
+      font-weight: 500;
+      font-size: clamp(12px, 1.2vw, 16px);
+      opacity: 0.9;
+      line-height: 1.2;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+      text-wrap: pretty;
+    }
+    @media print {
+      .bingo-card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="bingo-card" style="--bg: #FFEAB3;">
+  <div class="card-header">
+    <div class="title-wrap">
+        <div class="title-images">
+            <img src="/home/david/Documents/dev/tasks/bingo_musical/images/hat.png" alt="decor-1" class="decor left"
+                 style=""/>
+            <img src="/home/david/Documents/dev/tasks/bingo_musical/images/notes.png" alt="decor-2" class="decor right"
+                 style=""/>
+        </div>
+      <h1 class="card-title">BINGO MUSICAL DE PRUEBA</h1>
+    </div>
+    <div class="card-id">#1</div>
+  </div>
+
+  <div class="grid">
+    <div class="song-card">
+      <div class="song-title">Dancing Queen</div>
+      <div class="song-artist">ABBA</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">Bohemian Rhapsody</div>
+      <div class="song-artist">Queen</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">I Will Survive</div>
+      <div class="song-artist">Gloria Gaynor</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">Smooth</div>
+      <div class="song-artist">Santana ft. Rob Thomas</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">La Bamba</div>
+      <div class="song-artist">Los Lobos</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">Yo Quiero Bailar</div>
+      <div class="song-artist">Sonia y Selena</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">Blinding Lights</div>
+      <div class="song-artist">The Weeknd</div>
+    </div>
+    <div class="song-card">
+      <div class="song-title">Chica Ye Yé</div>
+      <div class="song-artist">Conchita Velasco</div>
+    </div>
+  </div>
+</div></body>
+</html>
