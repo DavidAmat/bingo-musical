@@ -16,17 +16,28 @@ import shutil
 import subprocess
 from pathlib import Path
 
+
 def try_chrome(input_html: Path, output_pdf: Path) -> bool:
-    chrome = shutil.which("google-chrome") or shutil.which("chrome") or shutil.which("chromium") or shutil.which("chromium-browser")
+    chrome = (
+        shutil.which("google-chrome")
+        or shutil.which("chrome")
+        or shutil.which("chromium")
+        or shutil.which("chromium-browser")
+    )
     if not chrome:
         return False
     output_pdf.parent.mkdir(parents=True, exist_ok=True)
+    # A4 landscape: 297mm x 210mm = 1122px x 794px at 96dpi
+    # Use exact dimensions to match the fixed CSS layout
     cmd = [
         chrome,
         "--headless",
         "--disable-gpu",
         "--print-to-pdf=" + str(output_pdf),
         "--no-margins",
+        "--window-size=1122,794",  # Exact A4 landscape dimensions at 96dpi
+        "--force-device-scale-factor=1",
+        "--run-all-compositor-stages-before-draw",
         str(input_html.resolve()),
     ]
     try:
@@ -34,6 +45,7 @@ def try_chrome(input_html: Path, output_pdf: Path) -> bool:
         return output_pdf.exists() and output_pdf.stat().st_size > 0
     except Exception:
         return False
+
 
 def try_weasyprint(input_html: Path, output_pdf: Path) -> bool:
     try:
@@ -47,6 +59,7 @@ def try_weasyprint(input_html: Path, output_pdf: Path) -> bool:
     except Exception:
         return False
 
+
 def try_pdfkit(input_html: Path, output_pdf: Path) -> bool:
     try:
         import pdfkit
@@ -58,6 +71,7 @@ def try_pdfkit(input_html: Path, output_pdf: Path) -> bool:
         return output_pdf.exists() and output_pdf.stat().st_size > 0
     except Exception:
         return False
+
 
 def convert_one(input_html: Path, output_pdf: Path) -> bool:
     if try_chrome(input_html, output_pdf):
@@ -72,11 +86,14 @@ def convert_one(input_html: Path, output_pdf: Path) -> bool:
     print(f"FAILED to convert {input_html}")
     return False
 
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("input", help="HTML file or directory")
     ap.add_argument("--out", help="Output PDF (single file mode)")
-    ap.add_argument("--glob", default="*.html", help="Glob pattern when input is a directory")
+    ap.add_argument(
+        "--glob", default="*.html", help="Glob pattern when input is a directory"
+    )
     ap.add_argument("--outdir", help="Output directory when input is a directory")
     args = ap.parse_args()
 
@@ -91,6 +108,7 @@ def main():
         for html in sorted(input_path.glob(args.glob)):
             pdf_path = outdir / (html.stem + ".pdf")
             convert_one(html, pdf_path)
+
 
 if __name__ == "__main__":
     main()
