@@ -1,6 +1,7 @@
-<div class="bingo-card" style="--bg: {{ background_color|default('#FFEAB3') }};">
+<div class="bingo-card" style="--bg: {{ background_color|default('#700302') }};">
   <div class="card-header">
     <div class="title-wrap">
+      {#
       {% if title_images %}
         <div class="title-images">
           {% for img in title_images %}
@@ -9,6 +10,7 @@
           {% endfor %}
         </div>
       {% endif %}
+      #}
       <h1 class="card-title">{{ title }}</h1>
     </div>
     <div class="card-id">#{{ card_number }}</div>

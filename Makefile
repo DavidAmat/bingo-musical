@@ -2,9 +2,9 @@
 # Variables
 PYTHON = python3
 TITLE = "Bingo musical LA SIRENA"
-BG_COLOR = "\#FFEAB3"
+BG_COLOR = "\#700302"
 IMAGES = images/hat.png images/notes.png
-COUNT = 30
+COUNT = 60
 SEED = 42
 
 # Directories

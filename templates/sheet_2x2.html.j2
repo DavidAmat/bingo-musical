@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=1122, initial-scale=1"/>
   <title>{{ sheet_title }}</title>
   <style>
-    @page { size: A4 landscape; margin: 5mm; }
-    
-    :root {
-      --card-radius: 16px; /* MARK DIMENSION */
-      --pad: 14px; /* MARK DIMENSION */
-      --gap: 14px; /* MARK DIMENSION */
+    /* A4 landscape: 297mm x 210mm = 1122px x 794px at 96dpi */
+    @page { 
+      size: A4 landscape; 
+      margin: 0; 
     }
     
     * { box-sizing: border-box; }
     
     html, body { 
-      height: 100%; 
       margin: 0;
       padding: 0;
+      width: 1122px;
+      height: 794px;
+      overflow: hidden;
     }
     
     body {
@@ -28,74 +28,61 @@
     }
     
     .sheet {
-      width: 100%;
-      height: 100%;
-      padding: 0; /* Removed padding to maximize space */
+      width: 1122px;
+      height: 794px;
+      padding: 15px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-      gap: 2mm; /* Minimal gap for visual separation but allows for cutting */
+      gap: 15px;
     }
     
     .cell {
-      background: #FFEAB3;
-      border-radius: 6px; /* Reduced border radius to save space */
-      padding: 2mm; /* Slightly increased padding for better visual separation */
+      background: #700302;
+      border-radius: 8px;
+      padding: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12); /* Subtle shadow for visual separation */
     }
     
     .bingo-card {
       background: transparent;
+      width: 100%;
       height: 100%;
       display: flex;
       flex-direction: column;
     }
     
     .card-header {
-      position: relative;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px; /* Reduced margin to save vertical space */
+      justify-content: flex-start;
+      margin-bottom: 8px;
+      position: relative;
     }
     
     .title-wrap { 
-      position: relative; 
       display: flex; 
       align-items: center; 
-      gap: 6px; /* MARK DIMENSION */
     }
-    
-    .title-images { 
-      position: relative; 
-      display: flex; 
-      gap: 6px; /* MARK DIMENSION */
-    }
-    
-    .decor { 
-      width: 28px; /* Slightly increased for better visibility */
-      height: 28px; /* Slightly increased for better visibility */
-      object-fit: contain; 
-    }
-    
-    .decor.right { order: 2; }
     
     .card-title {
       font-weight: 800;
       letter-spacing: 0.5px;
-      font-size: 22px; /* Increased font size for better readability */
+      font-size: 18px;
       text-transform: uppercase;
       margin: 0;
+      line-height: 1.2;
+      color: #fff;
+      white-space: nowrap;
     }
     
     .card-id {
       position: absolute;
-      left: 6px; /* MARK DIMENSION */
-      bottom: -12px; /* MARK DIMENSION */
+      left: 0;
+      bottom: -14px;
       font-weight: 700;
-      font-size: 12px; /* MARK DIMENSION */
-      color: #2b2b2b;
+      font-size: 11px;
+      color: #fff;
       opacity: 0.8;
     }
     
@@ -103,64 +90,56 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      gap: 6px; /* Optimized gap to maximize content space */
+      gap: 8px;
       flex: 1;
-      height: calc(100% - 50px); /* Account for header height */
+      margin-top: 10px;
     }
     
     .song-card {
-      background: #fffdf6d9;
-      border: 1.5px solid #d1b07a;
-      border-radius: 8px; /* Further reduced border radius */
-      padding: 6px 8px; /* Optimized padding */
+      background: rgba(255, 253, 246, 0.92);
+      border: 1px solid #d1b07a;
+      border-radius: 6px;
+      padding: 8px 6px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center; /* Center content horizontally */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      height: 100%; /* Fill available space */
-      min-height: 0; /* Allow proper scaling */
-      position: relative; /* For potential hover effects */
-      overflow: hidden; /* Prevent text overflow */
+      align-items: stretch;
+      min-width: 0;
+      min-height: 0;
     }
     
     .song-title {
       font-weight: 800;
-      font-size: min(16px, 3.2vw); /* Responsive font size for better readability */
-      line-height: 1.15;
-      margin-bottom: 4px;
-      word-wrap: break-word;
-      overflow-wrap: anywhere;
-      hyphens: auto;
+      font-size: 13px;
+      line-height: 1.2;
+      margin-bottom: 3px;
       text-align: center;
       width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     
     .song-artist {
       font-weight: 500;
-      font-size: min(14px, 2.8vw); /* Responsive font size for better readability */
-      opacity: 0.9;
-      line-height: 1.15;
-      word-wrap: break-word;
-      overflow-wrap: anywhere;
-      hyphens: auto;
+      font-size: 11px;
+      opacity: 0.85;
+      line-height: 1.2;
       text-align: center;
       width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
     
     @media print {
-      body { margin: 0; padding: 0; }
+      html, body {
+        width: 297mm;
+        height: 210mm;
+      }
       .sheet { 
-        height: 100vh; 
-        width: 100vw;
+        width: 297mm;
+        height: 210mm;
         page-break-after: always;
       }
-      /* Ensure proper scaling in print mode */
-      .cell { page-break-inside: avoid; }
-      /* Optimize font sizes for print */
-      .song-title { font-size: 16px; }
-      .song-artist { font-size: 14px; }
-      .card-title { font-size: 22px; }
     }
   </style>
 </head>
