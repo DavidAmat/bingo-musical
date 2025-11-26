@@ -19,8 +19,12 @@
   <div class="grid">
     {% for s in songs %}
     <div class="song-card">
-      <div class="song-title">{{ s.title }}</div>
-      <div class="song-artist">{{ s.artist }}</div>
+      <div class="song-card-inner">
+        <div class="song-card-cell">
+          <div class="song-title">{{ s.title }}</div>
+          <div class="song-artist">{{ s.artist }}</div>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>
